@@ -7,12 +7,15 @@
       </v-toolbar-title>
     </v-app-bar>
 
-    <v-content></v-content>
+    <v-content>
+      <maincontent />
+    </v-content>
   </v-app>
 </template>
 
 <script>
 import snoowrap from "snoowrap";
+import Maincontent from "./components/Maincontent.vue";
 
 const r = new snoowrap({
   userAgent: "deviget-test2",
@@ -25,7 +28,7 @@ let currentListing = null;
 
 export default {
   name: "App",
-  components: {},
+  components: { Maincontent },
   data() {
     return { myListing: undefined, page: 1 };
   },
