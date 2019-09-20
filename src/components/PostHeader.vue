@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" @click="selectPost">
+  <v-card class="mx-auto">
     <v-row>
       <v-col class="shrink">
         <a :href="image" target="_blank">
@@ -10,7 +10,7 @@
         <v-container class="pa-0">
           <v-row>
             <v-col>
-              <v-card-title>{{post.title}}</v-card-title>
+              <a @click.prevent="selectPost">{{post.title}}</a>
             </v-col>
           </v-row>
           <v-row>
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     selectPost() {
-      this.$emit("onSelectPost", { post: this.$props.post });
+      this.$emit("onSelectPost", this.$props.post);
     }
   }
 };

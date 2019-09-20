@@ -5,7 +5,12 @@
         <v-row>
           <v-col cols="6" sm="6">
             <v-subheader>Posts</v-subheader>
-            <post-header v-for="(post, index) in posts" :post="post" :key="`post-header-${index}`" />
+            <post-header
+              v-for="(post, index) in posts"
+              :post="post"
+              :key="`post-header-${index}`"
+              @onSelectPost="selectPost"
+            />
           </v-col>
           <v-col cols="6" sm="6">
             <v-subheader>Post detail</v-subheader>
@@ -20,13 +25,20 @@
 import PostHeader from "./PostHeader.vue";
 export default {
   data() {
-    return {};
+    return {
+      selectedPost: null
+    };
   },
   components: {
     PostHeader
   },
   props: {
     posts: { type: Array }
+  },
+  methods: {
+    selectPost(post) {
+      this.selectedPost = { ...post };
+    }
   }
 };
 </script>
