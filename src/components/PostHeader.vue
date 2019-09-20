@@ -1,26 +1,39 @@
 <template>
   <v-card class="mx-auto">
-    <v-row class="py-4 pl-4">
+    <v-row>
       <v-col class="shrink">
-        <v-img width="100" height="100" :src="image"></v-img>
+        <a :href="image" target="_blank">
+          <v-img width="100" height="100" :src="image" />
+        </a>
       </v-col>
       <v-col class="text-center">
         <v-container class="pa-0">
           <v-row>
             <v-col>
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
+              <v-card-title>{{post.title}}</v-card-title>
             </v-col>
+          </v-row>
+          <v-row>
             <v-col>
-              <v-btn icon>
-                <v-icon>mdi-bookmark</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col>
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
-              </v-btn>
+              <v-card-actions>
+                <v-row>
+                  <v-col>
+                    <v-btn icon>
+                      <v-icon>mdi-heart</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col>
+                    <v-btn icon>
+                      <v-icon>mdi-bookmark</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col>
+                    <v-btn icon>
+                      <v-icon>mdi-share-variant</v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-card-actions>
             </v-col>
           </v-row>
         </v-container>
@@ -37,7 +50,7 @@ export default {
   },
   computed: {
     image() {
-      const { preview } = this.$props.post;
+      const { preview = null } = this.$props.post;
       const imageFromPreview = _get(
         preview,
         "images.0.resolutions.0.url",
