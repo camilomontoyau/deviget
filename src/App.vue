@@ -6,9 +6,8 @@
         <span class="font-weight-light">Reddit posts</span>
       </v-toolbar-title>
     </v-app-bar>
-
     <v-content>
-      <maincontent />
+      <maincontent :posts="myListing" />
     </v-content>
   </v-app>
 </template>
@@ -30,7 +29,7 @@ export default {
   name: "App",
   components: { Maincontent },
   data() {
-    return { myListing: undefined, page: 1 };
+    return { myListing: [], page: 1 };
   },
   methods: {
     getTop() {

@@ -1,62 +1,32 @@
 <template>
   <v-container>
-    <v-layout text-center wrap>this is content</v-layout>
+    <v-layout text-center wrap>
+      <v-container class="grey lighten-5">
+        <v-row>
+          <v-col cols="6" sm="6">
+            <v-subheader>Posts</v-subheader>
+            <post-header v-for="(post, index) in posts" :post="post" :key="`post-header-${index}`" />
+          </v-col>
+          <v-col cols="6" sm="6">
+            <v-subheader>Post detail</v-subheader>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-layout>
   </v-container>
 </template>
 
 <script>
+import PostHeader from "./PostHeader.vue";
 export default {
-  data: () => ({
-    ecosystem: [
-      {
-        text: "vuetify-loader",
-        href: "https://github.com/vuetifyjs/vuetify-loader"
-      },
-      {
-        text: "github",
-        href: "https://github.com/vuetifyjs/vuetify"
-      },
-      {
-        text: "awesome-vuetify",
-        href: "https://github.com/vuetifyjs/awesome-vuetify"
-      }
-    ],
-    importantLinks: [
-      {
-        text: "Documentation",
-        href: "https://vuetifyjs.com"
-      },
-      {
-        text: "Chat",
-        href: "https://community.vuetifyjs.com"
-      },
-      {
-        text: "Made with Vuetify",
-        href: "https://madewithvuejs.com/vuetify"
-      },
-      {
-        text: "Twitter",
-        href: "https://twitter.com/vuetifyjs"
-      },
-      {
-        text: "Articles",
-        href: "https://medium.com/vuetify"
-      }
-    ],
-    whatsNext: [
-      {
-        text: "Explore components",
-        href: "https://vuetifyjs.com/components/api-explorer"
-      },
-      {
-        text: "Select a layout",
-        href: "https://vuetifyjs.com/layout/pre-defined"
-      },
-      {
-        text: "Frequently Asked Questions",
-        href: "https://vuetifyjs.com/getting-started/frequently-asked-questions"
-      }
-    ]
-  })
+  data() {
+    return {};
+  },
+  components: {
+    PostHeader
+  },
+  props: {
+    posts: { type: Array }
+  }
 };
 </script>
