@@ -2,35 +2,73 @@
   <v-app>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+        <span>Top</span>
+        <span class="font-weight-light">Reddit posts</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <HelloWorld />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import HelloWorld from "./components/HelloWorld";
+import snoowrap from "snoowrap";
+
+const r = new snoowrap({
+  userAgent: "deviget-test2",
+  clientId: "TIPuc7DsPEgEwA",
+  clientSecret: "QtIYW3DpMwbXCjfJeFONI_8fyxk",
+  refreshToken: "81058191780-23buKHuO4lGTricyV5L6xI1yOAY"
+});
+
+let currentListing = null;
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld,
+    HelloWorld
   },
-  data: () => ({
-    //
-  }),
+  data() {
+    return { myListing: undefined, page: 1 };
+  },
+  methods: {
+    getTop() {
+      r.getTop({ limit: 50 }).then(resultListing => {
+        currentListing = resultListing;
+        this.myListing = resultListing.map(
+          ({
+            title = null,
+            author: { name = null },
+            created = null,
+            num_comments = null,
+            thumbnail = null,
+            preview = null
+          }) => ({ title, name, created, num_comments, thumbnail, preview })
+        );
+      });
+    },
+    fetchMore() {
+      this.page = this.page++;
+      currentListing.fetchMore({ amount: 50 }).then(extendedListing => {
+        currentListing = extendedListing;
+        this.myListing = extendedListing.map(
+          ({
+            title = null,
+            author: { name = null },
+            created = null,
+            num_comments = null,
+            thumbnail = null,
+            preview = null
+          }) => ({ title, name, created, num_comments, thumbnail, preview })
+        );
+      });
+    }
+  },
+  beforeMount() {
+    this.getTop();
+  }
 };
 </script>
