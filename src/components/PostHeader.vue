@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto">
+  <v-card class="mx-auto" @click="selectPost">
     <v-row>
       <v-col class="shrink">
         <a :href="image" target="_blank">
@@ -65,6 +65,11 @@ export default {
   components: {},
   props: {
     post: { type: Object }
+  },
+  methods: {
+    selectPost() {
+      this.$emit("onSelectPost", { post: this.$props.post });
+    }
   }
 };
 </script>
