@@ -7,14 +7,11 @@
       </v-toolbar-title>
     </v-app-bar>
 
-    <v-content>
-      <HelloWorld />
-    </v-content>
+    <v-content></v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
 import snoowrap from "snoowrap";
 
 const r = new snoowrap({
@@ -28,9 +25,7 @@ let currentListing = null;
 
 export default {
   name: "App",
-  components: {
-    HelloWorld
-  },
+  components: {},
   data() {
     return { myListing: undefined, page: 1 };
   },
