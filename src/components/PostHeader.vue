@@ -1,8 +1,8 @@
 <template>
-  <v-card max-width="344" class="mx-auto">
+  <v-card class="mx-auto">
     <v-row class="py-4 pl-4">
       <v-col class="shrink">
-        <v-img height="200" width="200" src="https://cdn.vuetifyjs.com/images/cards/store.jpg"></v-img>
+        <v-img width="100" height="100" :src="image"></v-img>
       </v-col>
       <v-col class="text-center">
         <v-container class="pa-0">
@@ -30,9 +30,24 @@
 </template>
 
 <script>
+import _get from "lodash.get";
 export default {
   data() {
     return {};
+  },
+  computed: {
+    image() {
+      const { preview } = this.$props.post;
+      const imageFromPreview = _get(
+        preview,
+        "images.0.resolutions.0.url",
+        null
+      );
+      if (imageFromPreview) {
+        return imageFromPreview;
+      }
+      return require("../assets/logo.png");
+    }
   },
   components: {},
   props: {

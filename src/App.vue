@@ -25,6 +25,21 @@ const r = new snoowrap({
 
 let currentListing = null;
 
+const normalizePost = ({
+  title = null,
+  author: { name = null },
+  created = null,
+  num_comments = null,
+  preview = null
+}) => ({
+  title,
+  name,
+  created,
+  num_comments,
+  preview,
+  readStatus: false
+});
+
 export default {
   name: "App",
   components: { Maincontent },
@@ -35,32 +50,14 @@ export default {
     getTop() {
       r.getTop({ limit: 50 }).then(resultListing => {
         currentListing = resultListing;
-        this.myListing = resultListing.map(
-          ({
-            title = null,
-            author: { name = null },
-            created = null,
-            num_comments = null,
-            thumbnail = null,
-            preview = null
-          }) => ({ title, name, created, num_comments, thumbnail, preview })
-        );
+        this.myListing = resultListing.map(normalizePost);
       });
     },
     fetchMore() {
       this.page = this.page++;
       currentListing.fetchMore({ amount: 50 }).then(extendedListing => {
         currentListing = extendedListing;
-        this.myListing = extendedListing.map(
-          ({
-            title = null,
-            author: { name = null },
-            created = null,
-            num_comments = null,
-            thumbnail = null,
-            preview = null
-          }) => ({ title, name, created, num_comments, thumbnail, preview })
-        );
+        this.myListing = extendedListing.map(normalizePost);
       });
     }
   },

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "lodash.get": "^4.4.2",
     "snoowrap": "^1.19.0",
     "vue": "^2.6.10",
     "vuetify": "^2.0.0"
