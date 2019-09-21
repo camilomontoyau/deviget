@@ -7,21 +7,19 @@
       </v-toolbar-title>
     </v-app-bar>
     <v-content>
-      <maincontent :posts="myListing" />
+      <maincontent
+        :posts="myListing"
+        @onFetchMore="fetchMore"
+        :page="page"
+        @onReadPost="markPostAsRead"
+      />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import snoowrap from "snoowrap";
 import Maincontent from "./components/Maincontent.vue";
-
-const r = new snoowrap({
-  userAgent: "deviget-test2",
-  clientId: "TIPuc7DsPEgEwA",
-  clientSecret: "QtIYW3DpMwbXCjfJeFONI_8fyxk",
-  refreshToken: "81058191780-23buKHuO4lGTricyV5L6xI1yOAY"
-});
+import r from "./services/reddit";
 
 let currentListing = null;
 
@@ -30,14 +28,18 @@ const normalizePost = ({
   author: { name = null },
   created = null,
   num_comments = null,
-  preview = null
+  preview = null,
+  id = null,
+  selftext_html = null
 }) => ({
   title,
   name,
   created,
   num_comments,
   preview,
-  readStatus: false
+  readStatus: false,
+  id,
+  selftext_html
 });
 
 export default {
@@ -54,11 +56,14 @@ export default {
       });
     },
     fetchMore() {
-      this.page = this.page++;
+      this.page = this.page + 1;
       currentListing.fetchMore({ amount: 50 }).then(extendedListing => {
         currentListing = extendedListing;
         this.myListing = extendedListing.map(normalizePost);
       });
+    },
+    markPostAsRead({ index }) {
+      this.myListing[index].readStatus = true;
     }
   },
   beforeMount() {

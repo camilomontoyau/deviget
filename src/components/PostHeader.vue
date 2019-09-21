@@ -7,36 +7,33 @@
         </a>
       </v-col>
       <v-col class="text-center">
-        <v-container class="pa-0">
-          <v-row>
-            <v-col>
-              <a @click.prevent="selectPost">{{post.title}}</a>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-card-actions>
-                <v-row>
-                  <v-col>
-                    <v-btn icon>
-                      <v-icon>mdi-heart</v-icon>
-                    </v-btn>
-                  </v-col>
-                  <v-col>
-                    <v-btn icon>
-                      <v-icon>mdi-bookmark</v-icon>
-                    </v-btn>
-                  </v-col>
-                  <v-col>
-                    <v-btn icon>
-                      <v-icon>mdi-share-variant</v-icon>
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-card-actions>
-            </v-col>
-          </v-row>
-        </v-container>
+        <v-row>
+          <v-col>
+            <a @click.prevent="selectPost">{{post.title}}</a>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-icon>mdi-account</v-icon>
+
+            {{post.name}}
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col md="4">comments {{post.num_comments}}</v-col>
+      <v-col md="6">
+        <v-icon>mdi-calendar</v-icon>
+        {{dateCreated}}
+      </v-col>
+      <v-col md="2">
+        <v-btn v-if="post.readStatus" icon>
+          <v-icon>mdi-eye-check</v-icon>
+        </v-btn>
+        <v-btn v-else icon>
+          <v-icon>mdi-eye-outline</v-icon>
+        </v-btn>
       </v-col>
     </v-row>
   </v-card>
@@ -44,6 +41,7 @@
 
 <script>
 import _get from "lodash.get";
+import moment from "moment";
 export default {
   data() {
     return {};
@@ -59,16 +57,26 @@ export default {
       if (imageFromPreview) {
         return imageFromPreview;
       }
-      return require("../assets/logo.png");
+      return require("../assets/reddit-logo.png");
+    },
+    dateCreated() {
+      if (this.$props.post.created) {
+        return moment.unix(this.$props.post.created).fromNow();
+      }
+      return moment.fromNow();
     }
   },
   components: {},
   props: {
-    post: { type: Object }
+    post: { type: Object },
+    postindex: { type: Number }
   },
   methods: {
     selectPost() {
-      this.$emit("onSelectPost", this.$props.post);
+      this.$emit("onSelectPost", {
+        post: this.$props.post,
+        index: this.$props.postindex
+      });
     }
   }
 };
