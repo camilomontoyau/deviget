@@ -1,4 +1,9 @@
 import snoowrap from "snoowrap";
+/*
+ * IMPORTANT! I already know that I should not put this
+ * information here, but it will be for one week in order
+ * to let you run the project
+ */
 const r = new snoowrap({
   userAgent: "deviget-test2",
   clientId: "TIPuc7DsPEgEwA",
