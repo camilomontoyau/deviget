@@ -8,7 +8,7 @@ It reads top (trending) posts from reddit using its API
 you can see the project running at
 https://deviget.camilomontoyau.now.sh/
 
-!(deviget)[deviget.gif]
+![deviget](deviget.gif)
 
 ## Project setup
 
